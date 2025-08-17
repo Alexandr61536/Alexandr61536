@@ -1,10 +1,13 @@
-import { Center, Group, Stack } from "@mantine/core"
-import { IconBooks, IconLocation, IconMail, IconMapPin, IconPhone } from "@tabler/icons-react"
-import { CSSProperties } from "react"
-import { Card } from "./Card"
-import { cardsContent } from "../content/cards"
+import { Group, Stack, Switch, Title, useMantineColorScheme } from "@mantine/core"
+import { IconMoon, IconSun } from "@tabler/icons-react"
+import { CSSProperties, useEffect } from "react"
+import { COLORS } from "../../styles/vars"
+import { Section, SectionTypeEnum } from "./Section"
+import { SectionsContent } from "../content/Sections"
 
 export const Homepage: React.FC = () => {
+
+	const { colorScheme, setColorScheme } = useMantineColorScheme({keepTransitions: true})
 
     const leftHat = [
         "Мокичев Александр Ильич",
@@ -18,32 +21,67 @@ export const Homepage: React.FC = () => {
             flexDirection: "row", 
             alignItems: "center",
             justifyContent: "center",
-            fontSize: "var(--mantine-font-size-sm)",
+            fontSize: "var(--mantine-font-size-md)",
         },
-        cardsListStyle: {
-            width: "80%",
-            margin: "auto",
+        leftHat: {
+            animation: "leftHatEntering 1.5s ease 0s 1 normal forwards",
+        },
+        rightHat: {
+            animation: "rightHatEntering 1.5s ease 0s 1 normal forwards",
+        },
+        hat: {
+            width: "100%",
+            alignItems: "flex-start",
+            padding: "clamp(0.9rem, 2.9vw, 1.4rem) clamp(0.9rem, 2.9vw, 1.4rem) calc(1 * clamp(0.9rem, 2.9vw, 1.4rem)) clamp(0.9rem, 2.9vw, 1.4rem)"
         },
     }
 
     return(
-        <Stack gap={30}>
-           <Group grow style={{alignItems: "flex-start"}}>
+        <Stack gap={30} style={{color: colorScheme === 'light' ? COLORS.prettyGrayBlue : "var(--mantine-color-gray-1)"}}>
+           <Group grow style={styles["hat"]}>
                 <Stack align="flex-start">
-                    <Stack align="flex-start" gap={3}>
-                        {leftHat.map(x=>
-                            <div style={styles["rowSlyles"]}>{x}</div>
+                    <Stack align="flex-start" gap={3} style={styles["leftHat"]}>
+                        {leftHat.map((x, index)=>
+                            <div key={index} style={styles["rowSlyles"]}>{x}</div>
                         )}
                     </Stack>
                 </Stack>
+                <Stack align="flex-end">
+                    <Stack align="flex-end" gap={3} style={styles["rightHat"]}>
+                        <Switch
+                            size="md"
+                            offLabel={<IconMoon size={18}/>}
+                            onLabel={<IconSun size={18}/>}
+                            checked={colorScheme === 'light'}
+                            onChange={(e)=>setColorScheme(e.currentTarget.checked ? 'light' : 'dark')}
+                            styles={{track: {
+                                padding: "5px 0",
+                                backgroundColor: colorScheme === 'light' ? `${COLORS.prettyGrayBlue} !important` : "var(--mantine-color-gray-1) !important",
+                            }}}
+                        />
+                    </Stack>
+                </Stack>
             </Group>
-            <Stack style={styles["cardsListStyle"]} gap={40}>
-                {cardsContent.map(x=>
-                    <Card
-                        content={x}
-                    />
-                )}
-            </Stack>
+            <Section
+                title={SectionsContent["experience"].title}
+                contents={SectionsContent["experience"].cards}
+                type={SectionTypeEnum.horisontal}
+            />
+            <Section
+                title={SectionsContent["education"].title}
+                contents={SectionsContent["education"].cards}
+                type={SectionTypeEnum.vertical}
+            />
+            <Section
+                title={SectionsContent["hardSkills"].title}
+                contents={SectionsContent["hardSkills"].cards}
+                type={SectionTypeEnum.vertical}
+            />
+            <Section
+                title={SectionsContent["softSkills"].title}
+                contents={SectionsContent["softSkills"].cards}
+                type={SectionTypeEnum.vertical}
+            />
         </Stack>
     )
 }
