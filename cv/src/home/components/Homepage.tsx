@@ -1,6 +1,6 @@
-import { Group, Stack, Switch, Title, useMantineColorScheme } from "@mantine/core"
+import { Group, Stack, Switch, useMantineColorScheme } from "@mantine/core"
 import { IconMoon, IconSun } from "@tabler/icons-react"
-import { CSSProperties, useEffect } from "react"
+import type { CSSProperties } from "react"
 import { COLORS } from "../../styles/vars"
 import { Section, SectionTypeEnum } from "./Section"
 import { SectionsContent } from "../content/Sections"

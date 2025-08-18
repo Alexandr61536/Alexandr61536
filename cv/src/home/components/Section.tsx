@@ -1,5 +1,6 @@
 import { Stack, Title } from "@mantine/core"
-import { Card, CardsContentListElement, CardsContentType } from "./Card"
+import { Card } from "./Card"
+import type { CardsContentListElement } from './Card'
 import { Carousel } from "@mantine/carousel"
 
 export enum SectionTypeEnum {
@@ -66,9 +67,9 @@ export const Section: React.FC<SectionProps> = ({title, contents, type}) => {
                     }}
                 >
                     {contents.map((x, i) =>
-                        <Carousel.Slide>
+                        <Carousel.Slide key={`Section_${title}_${i}`}>
                             <Card
-                                key={i}
+                                key={`Section_${title}_${i}`}
                                 content={x}
                             />
                         </Carousel.Slide>
@@ -86,7 +87,7 @@ export const Section: React.FC<SectionProps> = ({title, contents, type}) => {
                 <Stack style={styles["cardsListStyle"]} gap={40}>
                     {contents.map((x, index)=>
                         <Card
-                            key={index}
+                            key={`Section_${title}_${index}`}
                             content={x}
                         />
                     )}

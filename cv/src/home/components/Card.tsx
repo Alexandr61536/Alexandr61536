@@ -1,5 +1,5 @@
 import { Stack, useMantineColorScheme } from "@mantine/core"
-import { CSSProperties } from "react"
+import type { CSSProperties } from "react"
 
 export type CardsContentListElement = {
     hat?: React.ReactNode,

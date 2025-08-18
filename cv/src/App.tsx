@@ -6,11 +6,8 @@ import { Homepage } from './home/components/Homepage';
 
 import { createTheme, MantineProvider } from '@mantine/core';
 import { COLORS } from './styles/vars';
-import { useColorScheme } from '@mantine/hooks';
 
-function App() {
-
-	const systemColorScheme = useColorScheme()
+export function App() {
 
 	const theme = createTheme({
 		fontFamily: "Montserrat",

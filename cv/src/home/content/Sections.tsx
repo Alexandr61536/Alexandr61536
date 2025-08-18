@@ -1,4 +1,4 @@
-import { CardsContentType } from "../components/Card";
+import type { CardsContentType } from "../components/Card";
 
 export type SectionsContentType = {
     [SectionName: string]: {
@@ -24,7 +24,7 @@ export const SectionsContent: SectionsContentType = {
             {
                 head: "SERVICE ENERGY",
                 title: "1 ГОД",
-                text: <p style={{textAlign: "justify"}}>
+                text: <div style={{textAlign: "justify"}}>
                     Разработка frontend для системы контроля и управления воздушными линиями электропередач. 
                     Работа ведётся с имеющимся Web-приложением для управления устройствами дистанционной диагностики, 
                     предоставляемым клиентам по модели SaaS. 
@@ -80,7 +80,7 @@ export const SectionsContent: SectionsContentType = {
                             Yandex Maps JavaScript API
                         </li>
                     </ul> 
-                </p>,
+                </div>,
             },
         ],
     },
