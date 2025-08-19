@@ -64,6 +64,10 @@ export const Section: React.FC<SectionProps> = ({title, contents, type}) => {
                         indicators: {
                             position: 'absolute',
                             bottom: -10,
+                        },
+                        control: {
+                            userSelect: "none",
+                            outline: "none",
                         }
                     }}
                 >

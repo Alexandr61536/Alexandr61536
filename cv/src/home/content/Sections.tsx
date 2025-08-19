@@ -1,4 +1,3 @@
-import { Stack } from "@mantine/core";
 import type { CardsContentType } from "../components/Card";
 
 export type SectionsContentType = {
