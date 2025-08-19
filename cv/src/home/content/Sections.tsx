@@ -7,6 +7,39 @@ export type SectionsContentType = {
     }
 }
 
+
+function getTimePassed(year: number, month: number): string {
+    const now = new Date();
+    const currentYear = now.getFullYear();
+    const currentMonth = now.getMonth() + 2;
+    
+    let totalMonths = (currentYear - year) * 12 + (currentMonth - month);
+    if (totalMonths < 0) totalMonths = 0;
+    
+    const years = Math.floor(totalMonths / 12);
+    const months = totalMonths % 12;
+    
+    if (totalMonths === 0) return "меньше месяца";
+    
+    const yearsText = getDeclension(years, ['год', 'года', 'лет']);
+    const monthsText = getDeclension(months, ['месяц', 'месяца', 'месяцев']);
+    
+    return [yearsText, monthsText].filter(Boolean).join(', ');
+}
+
+function getDeclension(number: number, forms: [string, string, string]): string {
+    if (number === 0) return '';
+    
+    const n = Math.abs(number) % 100;
+    const n1 = n % 10;
+    
+    if (n > 10 && n < 20) return `${number} ${forms[2]}`;
+    if (n1 > 1 && n1 < 5) return `${number} ${forms[1]}`;
+    if (n1 === 1) return `${number} ${forms[0]}`;
+    
+    return `${number} ${forms[2]}`;
+}
+
 export const SectionsContent: SectionsContentType = {
     "experience": {
         title: "ОПЫТ РАБОТЫ",
@@ -188,7 +221,7 @@ export const SectionsContent: SectionsContentType = {
             },
             {
                 head: "SERVICE ENERGY",
-                title: "1 ГОД",
+                title: getTimePassed(2024, 6).toUpperCase(),
                 text: <div 
                     css={{
                         textAlign: "justify",

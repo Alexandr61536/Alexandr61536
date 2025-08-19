@@ -76,7 +76,10 @@ export const Card: React.FC<CardProps> = ({content, style, onlyHead}) => {
     }
 
     return(
-        <Stack gap={0} style={styles["root"]}>
+        <Stack 
+            gap={0} 
+            style={styles["root"]}
+        >
             {onlyHead ? 
                 <Stack
                     justify="center"
