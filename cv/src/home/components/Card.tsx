@@ -1,4 +1,4 @@
-import { Stack, useMantineColorScheme } from "@mantine/core"
+import { Stack, Title, useMantineColorScheme } from "@mantine/core"
 import type { CSSProperties } from "react"
 
 export type CardsContentListElement = {
@@ -16,9 +16,10 @@ export type CardsContentType = {
 export type CardProps = {
     content: CardsContentType,
     style?: {[key: string]: CSSProperties},
+    onlyHead?: boolean,
 }
 
-export const Card: React.FC<CardProps> = ({content, style}) => {
+export const Card: React.FC<CardProps> = ({content, style, onlyHead}) => {
 
     const { colorScheme } = useMantineColorScheme()
 
@@ -56,7 +57,6 @@ export const Card: React.FC<CardProps> = ({content, style}) => {
             ...style?.li
         },
         hat: {
-            
             fontWeight: "500",
             fontSize: "var(--mantine-font-size-lg)",
             ...style?.hat
@@ -67,14 +67,32 @@ export const Card: React.FC<CardProps> = ({content, style}) => {
             alignItems: "center",
             fontSize: "var(--mantine-font-size-md)",
             ...style?.hat
-        }
+        },
+        head: {
+            fontWeight: !onlyHead ? "700" : undefined,
+            fontSize: !onlyHead ? "var(--mantine-font-size-lg)" : undefined,
+            ...style?.head
+        },
     }
 
     return(
         <Stack gap={0} style={styles["root"]}>
-            <span style={styles["title"]}>
-                {content.head}
-            </span>
+            {onlyHead ? 
+                <Stack
+                    justify="center"
+                    style={{
+                        height: "100%",
+                    }}
+                >
+                    <Title size={"xl"} style={styles["head"]}>
+                        {content.head}
+                    </Title>
+                </Stack>
+            :
+                <span style={styles["head"]}>
+                    {content.head}
+                </span>
+            }
             <span style={styles["title"]}>
                 {content.title}
             </span>

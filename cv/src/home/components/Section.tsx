@@ -1,6 +1,6 @@
 import { Stack, Title } from "@mantine/core"
 import { Card } from "./Card"
-import type { CardsContentListElement } from './Card'
+import type { CardsContentType } from './Card'
 import { Carousel } from "@mantine/carousel"
 
 export enum SectionTypeEnum {
@@ -10,7 +10,7 @@ export enum SectionTypeEnum {
 
 type SectionProps = {
     title?: string,
-    contents: CardsContentListElement[],
+    contents: CardsContentType[],
     type: SectionTypeEnum,
 }
 
@@ -22,6 +22,7 @@ export const Section: React.FC<SectionProps> = ({title, contents, type}) => {
         },
         root: {
             marginBottom: "calc(2 * clamp(0.9rem, 2.9vw, 1.4rem))",
+            maxWidth: "100vw",
         },
         title: {
             marginBottom: "calc(2 * clamp(0.9rem, 2.9vw, 1.4rem))",
@@ -50,8 +51,8 @@ export const Section: React.FC<SectionProps> = ({title, contents, type}) => {
                             overflow: "visible",
                         },
                         slide: {
-                            padding: "calc(0.5 * clamp(0.9rem, 2.9vw, 1.4rem))",
-                            height: "fit-content",
+                            padding: "calc(1 * clamp(0.9rem, 2.9vw, 1.4rem))",
+                            // height: "100% !important",
                             overflow: "visible",
                         },
                         container: {
@@ -71,6 +72,12 @@ export const Section: React.FC<SectionProps> = ({title, contents, type}) => {
                             <Card
                                 key={`Section_${title}_${i}`}
                                 content={x}
+                                style={{
+                                    root: {
+                                        height: "100%",
+                                    },
+                                }}
+                                onlyHead={(!x.list) && (!x.text) && (!x.title)}
                             />
                         </Carousel.Slide>
                     )}
