@@ -12,6 +12,7 @@ export default defineConfig({
   base: "https://alexandr61536.github.io/Alexandr61536/",
   server: {
     port: 3000,
-    host: "0.0.0.0",
+    host: '0.0.0.0',
+    strictPort: true,
   },
 })

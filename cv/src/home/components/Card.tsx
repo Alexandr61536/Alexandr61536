@@ -1,5 +1,5 @@
 import { Stack, Title, useMantineColorScheme } from "@mantine/core"
-import type { CSSProperties } from "react"
+import { useMemo, useRef, type CSSProperties } from "react"
 
 export type CardsContentListElement = {
     hat?: React.ReactNode,
@@ -10,18 +10,23 @@ export type CardsContentType = {
     head?: React.ReactNode,
     title?: React.ReactNode,
     text?: React.ReactNode,
-    list?: CardsContentListElement[]
+    list?: CardsContentListElement[],
 }
 
 export type CardProps = {
     content: CardsContentType,
     style?: {[key: string]: CSSProperties},
     onlyHead?: boolean,
+    offset?: number,
 }
 
-export const Card: React.FC<CardProps> = ({content, style, onlyHead}) => {
+export const Card: React.FC<CardProps> = ({content, style, onlyHead, offset}) => {
 
     const { colorScheme } = useMantineColorScheme()
+
+    const elementRef = useRef<HTMLDivElement>(null);
+
+    const vw = window.innerWidth    
 
     const styles: {[key: string]: CSSProperties} = {
         root: {
@@ -33,9 +38,13 @@ export const Card: React.FC<CardProps> = ({content, style, onlyHead}) => {
              : `20px 20px 60px #101010,
              -20px -20px 60px #40403e`,
             padding: "2% 3%",
-            animation: "cardEntering 1.5s ease 0s 1 normal forwards",
+            animation: "cardEntering 1s ease 0s 1 normal forwards",
             maxHeight: "50vh",
             overflowY: "scroll",
+            transform: offset ? `perspective(200px) rotateY(${Math.floor((offset + (offset < 0 ? 1 : -1)*vw/2)/10) * 0.02 }deg)` : '',
+            transformStyle: "preserve-3d",
+            transition: "transform 0.3s ease",
+            scrollbarWidth: "none",
             ...style?.root
         },
         title: {
@@ -78,7 +87,9 @@ export const Card: React.FC<CardProps> = ({content, style, onlyHead}) => {
     return(
         <Stack 
             gap={0} 
-            style={styles["root"]}
+            style={useMemo(()=>styles["root"], [offset, colorScheme])}
+            ref={elementRef}
+            onWheel={e=>e.stopPropagation()}
         >
             {onlyHead ? 
                 <Stack

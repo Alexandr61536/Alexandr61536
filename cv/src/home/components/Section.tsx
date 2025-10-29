@@ -1,7 +1,9 @@
 import { Stack, Title } from "@mantine/core"
 import { Card } from "./Card"
 import type { CardsContentType } from './Card'
-import { Carousel } from "@mantine/carousel"
+import { Carousel } from "./Carousel"
+import { useState } from "react"
+import { Carousel as MantineCarousel } from "@mantine/carousel"
 
 export enum SectionTypeEnum {
     vertical    = 0,
@@ -15,6 +17,7 @@ type SectionProps = {
 }
 
 export const Section: React.FC<SectionProps> = ({title, contents, type}) => {
+    
     const styles = {
         cardsListStyle: {
             width: "80%",
@@ -25,8 +28,25 @@ export const Section: React.FC<SectionProps> = ({title, contents, type}) => {
             maxWidth: "100vw",
         },
         title: {
-            marginBottom: "calc(2 * clamp(0.9rem, 2.9vw, 1.4rem))",
+            width: "fit-content",
+            margin: "auto",
+            paddingBottom: "calc(1 * clamp(0.9rem, 2.9vw, 1.4rem))",
+            backgroundImage: "linear-gradient(to right bottom, #424242ff 0%, #888888ff 100%)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            animation: "outOfDim 1s ease 0s 1 normal forwards",
         }
+    }
+
+    const [currentSlide, setCurrentSlide] = useState(0);
+    
+    const getOffset = (i: number, length: number): number => {
+        const normalisedDiff = (i - currentSlide + length) % length
+        if (normalisedDiff === 0)
+            return 0
+        if (normalisedDiff < length/2)
+            return 1
+        return -1
     }
 
     if (type === SectionTypeEnum.horisontal)
@@ -35,44 +55,9 @@ export const Section: React.FC<SectionProps> = ({title, contents, type}) => {
                 <Title style={styles["title"]} size={"xl"}>
                     {title}
                 </Title>
-                <Carousel
-                    slideSize="50%"
-                    controlsOffset="md"
-                    controlSize={18}
-                    withControls
-                    withIndicators
-                    emblaOptions={{
-                        loop: true,
-                        dragFree: false,
-                        align: 'center'
-                    }}
-                    styles={{
-                        viewport: {
-                            overflow: "visible",
-                        },
-                        slide: {
-                            padding: "calc(1 * clamp(0.9rem, 2.9vw, 1.4rem))",
-                            // height: "100% !important",
-                            overflow: "visible",
-                        },
-                        container: {
-                            height: "fit-content",
-                        },
-                        root: {
-                            margin: "auto",
-                        },
-                        indicators: {
-                            position: 'absolute',
-                            bottom: -10,
-                        },
-                        control: {
-                            userSelect: "none",
-                            outline: "none",
-                        }
-                    }}
-                >
+                <Carousel setCurrentSlide={setCurrentSlide} beforeUmount={()=>setCurrentSlide(0)}>
                     {contents.map((x, i) =>
-                        <Carousel.Slide key={`Section_${title}_${i}`}>
+                        <MantineCarousel.Slide key={`Section_${title}_${i}`}>
                             <Card
                                 key={`Section_${title}_${i}`}
                                 content={x}
@@ -82,8 +67,9 @@ export const Section: React.FC<SectionProps> = ({title, contents, type}) => {
                                     },
                                 }}
                                 onlyHead={(!x.list) && (!x.text) && (!x.title)}
+                                offset={getOffset(i, contents.length || 0)}
                             />
-                        </Carousel.Slide>
+                        </MantineCarousel.Slide>
                     )}
                 </Carousel>
             </div>
