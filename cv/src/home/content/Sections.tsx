@@ -307,7 +307,16 @@ export const SectionsContent: SectionsContentType = {
         cards: [
             {
                 title: "ОСНОВНЫЕ РАБОЧИЕ НАВЫКИ",
-                list: [
+                chips: [
+                    { 
+                        text: "HTML",
+                    },
+                    { 
+                        text: "CSS",
+                    },
+                    { 
+                        text: "JavaScript",
+                    },
                     { 
                         text: "TypeScript",
                     },
@@ -330,13 +339,37 @@ export const SectionsContent: SectionsContentType = {
                         text: "Emotion",
                     },
                     { 
-                        text: "React Query",
+                        text: "TanStack",
                     },
                     { 
                         text: "ApexCharts",
                     },
                     { 
                         text: "Yandex Maps JavaScript API",
+                    },
+                    { 
+                        text: "GIT",
+                    },
+                    { 
+                        text: "REST",
+                    },
+                    { 
+                        text: "Tailwind",
+                    },
+                    { 
+                        text: "Figma",
+                    },
+                    { 
+                        text: "Webpack",
+                    },
+                    { 
+                        text: "Vite",
+                    },
+                    { 
+                        text: "Yarn",
+                    },
+                    { 
+                        text: "NPM",
                     },
                 ]
             },

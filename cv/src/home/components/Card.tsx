@@ -1,4 +1,4 @@
-import { Stack, Title, useMantineColorScheme } from "@mantine/core"
+import { Chip, Group, Stack, Title, useMantineColorScheme } from "@mantine/core"
 import { useMemo, useRef, type CSSProperties } from "react"
 
 export type CardsContentListElement = {
@@ -11,6 +11,7 @@ export type CardsContentType = {
     title?: React.ReactNode,
     text?: React.ReactNode,
     list?: CardsContentListElement[],
+    chips?: CardsContentListElement[],
 }
 
 export type CardProps = {
@@ -64,6 +65,16 @@ export const Card: React.FC<CardProps> = ({content, style, onlyHead, offset}) =>
             flexDirection: "row",
             alignItems: "center",
             ...style?.li
+        },
+        chip: {
+            backgroundColor: "var(--mantine-primary-color-light)",
+            boxShadow: colorScheme === 'light' ? `4px 4px 8px rgba(50, 60, 70, 0.8),
+             -4px -4px 8px #ffffff`
+             : `4px 4px 8px #101010,
+             -4px -4px 8px #40403e`,
+            overflow: "visible",
+            cursor: "default",
+            userSelect: "all",
         },
         hat: {
             fontWeight: "500",
@@ -127,6 +138,13 @@ export const Card: React.FC<CardProps> = ({content, style, onlyHead, offset}) =>
                     </li>
                 )}
             </ul>
+            <Group>
+                {content.chips?.map((x, _) =>
+                    <Chip checked={false} styles={{label: styles["chip"]}}>
+                        {x.text}
+                    </Chip>
+                )}
+            </Group>
         </Stack>
     )
 }
