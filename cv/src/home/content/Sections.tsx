@@ -46,7 +46,7 @@ export const SectionsContent: SectionsContentType = {
         cards: [
             {
                 head: "ОПЫТНЫЙ ЗАВОД",
-                title: "3 МЕСЯЦА",
+                title: "4 МЕСЯЦА",
                 text: <div 
                     css={{
                         textAlign: "justify",
@@ -91,7 +91,7 @@ export const SectionsContent: SectionsContentType = {
             },
             {
                 head: "ОПЫТНЫЙ ЗАВОД",
-                title: "3 МЕСЯЦА",
+                title: "4 МЕСЯЦА",
                 text: <div 
                     css={{
                         textAlign: "justify",
